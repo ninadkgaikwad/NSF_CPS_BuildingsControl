@@ -1,6 +1,6 @@
-function [X_k_Plus_Plant] = HEMS_Plant(X_k_Plant,W_k_Plant,U_k,HEMSPlant_Params,HEMSHouse_Params,Community_Params,Simulation_Params)
-
-% Author: Ninad Kiran Gaikwad
+function [X_k_Plus_Plant] = HEMS_Plant1(X_k_Plant,W_k_Plant,U_k,HEMSPlant_Params,HEMSHouse_Params,Community_Params,Simulation_Params)
+% some changes by shishir
+% Author: Ninad Kiran Gaikwad  
 % Date: Mar/20/2021
 % Description: HEMS_Plant - Plant Dynamics
 
@@ -130,7 +130,8 @@ end
 Total_OtherLoad_Energy_Desired=sum(OtherLoad_Energy_Desired,3);
 
 % Total energy Desired
-TotalEnergy_Desired=((E_AC/Eff_Inv)*(sum(U_k(1,3,:))))+Total_OtherLoad_Energy_Desired+sum(E_Bat_Charging_Dispatch(1,1,Battery_ActualCharging_Indices));
+%TotalEnergy_Desired=((E_AC/Eff_Inv)*(sum(U_k(1,3,:))))+Total_OtherLoad_Energy_Desired+sum(E_Bat_Charging_Dispatch(1,1,Battery_ActualCharging_Indices));
+TotalEnergy_Desired=((E_AC/Eff_Inv)*(sum(U_k(1,3,:))))+Total_OtherLoad_Energy_Desired;
 
 % Energy Mismatch
 AvailableEnergy=Total_PVEnergy_Available+sum(E_Bat_Discharging_Dispatch(1,1,Battery_ActualDischarging_Indices));

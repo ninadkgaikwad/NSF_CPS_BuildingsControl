@@ -171,7 +171,7 @@ Community_Bat_E_Charging_Dispatchable=sum(House_Bat_E_Charging_Dispatchable(:,1,
 Community_Bat_E_Discharging_Dispatchable=sum(House_Bat_E_Discharging_Dispatchable(:,1,:),3);%***
 
 % House AC Startup Power Quantities
-Community_AC_P_StartUp_Available=(Community_PV_E_Available/Simulation_StepSize)+(Community_Bat_Controller_Charging_Desired*MaxRate_Discharging_StartUp);
+Community_AC_P_StartUp_Available=(Community_PV_E_Available/Simulation_StepSize)+(Community_Bat_Controller_Discharging_Desired*MaxRate_Discharging_StartUp);
 
 House_AC_StartUp_Desired=House_AC_Controller_TurnOn_Desired(:,1,:)-X_k_Plant_History(:,30,:);
 House_AC_StartUp_Desired = (abs(House_AC_StartUp_Desired)+House_AC_StartUp_Desired)/2;

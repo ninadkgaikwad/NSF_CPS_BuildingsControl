@@ -160,7 +160,7 @@ for ii=1:N_House
     fprintf('\n')
     fprintf('Average Fridge Death for House:%d (PLP) = %f Hours/Day',ii,AC_Death_AvgPerDay(ii));
     fprintf('\n')
-    fprintf('Percentage of Non-Critical Loads served for House:%d (SLP) = %f %/Day',ii,Percentage_C_Served(ii));
+    fprintf('Percentage of Critical Loads served for House:%d (SLP) = %f %/Day',ii,Percentage_C_Served(ii));
     fprintf('\n')
     fprintf('Percentage of All Loads served for House:%d (SLP) = %f %/Day',ii,Percentage_All_Served(ii));
     fprintf('\n')
@@ -178,7 +178,7 @@ end
 % Priniting Quantitative Results for Community
 fprintf('Average Fridge Death for Community (PLP) = %f Hours/Day',AC_Death_AvgPerDay_Community);
 fprintf('\n')
-fprintf('Percentage of Non-Critical Loads served for Community (SLP) = %f %/Day',Percentage_C_Served_Community);
+fprintf('Percentage of Critical Loads served for Community (SLP) = %f %/Day',Percentage_C_Served_Community);
 fprintf('\n')
 fprintf('Percentage of All Loads served for Community (SLP) = %f %/Day',Percentage_All_Served_Community);
 fprintf('\n')

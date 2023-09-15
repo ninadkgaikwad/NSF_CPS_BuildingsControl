@@ -8,18 +8,23 @@ clear all;
 clc;
 close all;
 
+%for shishir's office computer
+addpath("C:\Users\shishir\OneDrive - Washington State University (email.wsu.edu)\WSU_inside\Ninad_collab\20_Gaikwad_SmartCommunity\codes\CodeFromSWEEFA")
+
+%for shishir's laptop
+%addpath("C:\Users\shish\OneDrive - Washington State University (email.wsu.edu)\WSU_inside\Ninad_collab\20_Gaikwad_SmartCommunity\codes\CodeFromSWEEFA"); %added by shishir
 %% Simulation - User Inputs
 
 %----------------------------- OS Information ----------------------------%
 
-OS=3; % 1 - Linux ; 2 - Windows-Laptop ; 3 - Windows-PC; 4-shishir's window PC
+OS=5; % 1 - Linux ; 2 - Windows-Laptop ; 3 - Windows-PC; 4-shishir's window PC ; 5-shishir's office pc
 
 %-------------------------- Simulation Step Sizes ------------------------%
 
 FileRes=10;                          % in Minutes
 Simulation_StepSize = FileRes/60;   % in Hours
 StepSize = FileRes*60;              % in Seconds
-SmartCommunity_ControllerType=2;    % 1 = Smart Local Controller ; 2 = Dumb Local Controller
+SmartCommunity_ControllerType=1;    % 1 = Smart Local Controller ; 2 = Dumb Local Controller
 
 %-------------------------- Simulation Parameters ------------------------%
 
@@ -51,14 +56,14 @@ T_House_Variance=0.5;
 
 % Battery Initial Condition
 N1=1;                           % User Input - Battery Max Changing Factor
-Battery_Energy_Max = 13.5*N1; % 13.5 Tesla Battery
+Battery_Energy_Max = 13.5; % 13.5 Tesla Battery
 
 %--------------------- Simulation Period Specification -------------------%
 
 % Load Computation Start Date
 StartYear=2017;     % User Defined
-StartMonth=9;      % User Defined
-StartDay=11;         % User Defined
+StartMonth=9;       % User Defined
+StartDay=11;        % User Defined
 StartTime=0;        % User Defined
 
 % Load Computation End Date
@@ -69,7 +74,7 @@ EndTime=24-(FileRes/60);          %24-(FileRes/60);
 
 %----------------------- Folder Paths Specification ----------------------%
 
-ImageFolder_Name='Gainesville_Baseline_7DayTest_SC_PVBat1_Bat0_PV0_None0_SCL1_';
+ImageFolder_Name='Gainesville_Baseline_7DayTest_SC_PVBat1_Bat0_PV0_None0_SCL1_AC3';
 
 SimulationData_FileName='FigurePlotterData_Gainesville_Baseline_7DayTest_SC_PVBat1_Bat0_PV0_None0_SLC1';
 
@@ -101,7 +106,11 @@ elseif (OS==3) % Windows-PC
      LoadDataFolder_Path='C:\Users\Me!\Dropbox (UFL)\NinadGaikwad_PhD\Gaikwad_Research\Gaikwad_Research_Work\20_Gaikwad_SmartCommunity\data\PreProcessedFiles\10minute_data_austin_HouseWise\';
 elseif (OS==4) % shishir's PC
     WeatherDataFile_Path = "E:\WSU_inside\Ninad_collab\20_Gaikwad_SmartCommunity\data\WeatherData\Gainesville_2017_To_2017_WeatherData_NSRDB_30minTo10minRes.csv";
-    LoadDataFolder_Path="E:\WSU_inside\Ninad_collab\20_Gaikwad_SmartCommunity\data\PreProcessedFiles\10minute_data_austin_HouseWise";
+    LoadDataFolder_Path="E:\WSU_inside\Ninad_collab\20_Gaikwad_SmartCommunity\data\PreProcessedFiles\10minute_data_austin_HouseWise\";
+
+elseif (OS==5) % shishir's office pc
+WeatherDataFile_Path = "C:\Users\shishir\OneDrive - Washington State University (email.wsu.edu)\WSU_inside\Ninad_collab\20_Gaikwad_SmartCommunity\data\WeatherData\Gainesville_2017_To_2017_WeatherData_NSRDB_30minTo10minRes.csv";
+LoadDataFolder_Path="C:\Users\shishir\OneDrive - Washington State University (email.wsu.edu)\WSU_inside\Ninad_collab\20_Gaikwad_SmartCommunity\data\PreProcessedFiles\10minute_data_austin_HouseWise\";
           
 end
 
@@ -186,6 +195,7 @@ Battery_ChargerDischarge_Data=PecanStreet_Data_Output(:,7,:);
 EVCharging_Data=PecanStreet_Data_Output(:,7+1:9,:);
 
 E_LoadData=PecanStreet_Data_Output(:,:,:);
+%E_LoadData=PecanStreet_Data_Output(:,:,:) *2;
 
 % Making Negatives (-) = 0 in LoadData
 E_LoadData(E_LoadData(:,9+1:end,:)<0)=0;
@@ -213,8 +223,8 @@ for ii=1:N_House
 end
 
 %% Community-House Parameter Generation
-
-[HEMSPlant_Params,HEMSHouse_Params] = HEMS_CommunityHouse_Parameter_Generator(Community_Params,Simulation_Params);
+% here function edited by shishir
+[HEMSPlant_Params,HEMSHouse_Params] = HEMS_CommunityHouse_Parameter_Generator1(Community_Params,Simulation_Params);
 
 %% Initial States,Disturbance and Control Struct Creation
 
@@ -291,7 +301,7 @@ for ii=1:Simulation_Steps_Total % For each Simulation Time Step
     
     if (SmartCommunity_ControllerType==1) % Smart Local Controller
         
-        [U_k] = HEMS_Smart_LocalController(X_k_Plant,W_k_Plant,HEMSPlant_Params,Community_Params,Simulation_Params);
+        [U_k] = HEMS_Smart_LocalController1(X_k_Plant,W_k_Plant,HEMSPlant_Params,Community_Params,Simulation_Params);
         
     elseif (SmartCommunity_ControllerType==2) % Dumb Local Controller
         
@@ -302,8 +312,9 @@ for ii=1:Simulation_Steps_Total % For each Simulation Time Step
     TimePer_Controller(ii)=toc; % Measuring Time for Controller
     
     % Step 2: Compute Next Plant State
+    % HEMS_Plant1 is modified file by shishir
     
-    [X_k_Plus_Plant] = HEMS_Plant(X_k_Plant,W_k_Plant,U_k,HEMSPlant_Params,HEMSHouse_Params,Community_Params,Simulation_Params);
+    [X_k_Plus_Plant] = HEMS_Plant1(X_k_Plant,W_k_Plant,U_k,HEMSPlant_Params,HEMSHouse_Params,Community_Params,Simulation_Params);
     
     % Step 3: Update Plant History
     
@@ -383,13 +394,12 @@ HEMS_Plant_FigurePlotter_Input.TimePer_Controller=TimePer_Controller;
 save(SimulationData_FileName,'HEMS_Plant_FigurePlotter_Input');
 
 % Plotting using External Function
-HEMS_Plant_FigurePlotter(HEMS_Plant_FigurePlotter_Input);
+HEMS_Plant_FigurePlotter_debug(HEMS_Plant_FigurePlotter_Input);
 
 %% Performance Computation
 
 % Creating the HEMS_Plant_Baseline_FigurePlotter_Input - Struct
 HEMS_PerformanceComputation = []; % Empty Structs
-
 HEMS_PerformanceComputation.X_k_Plant_History=X_k_Plant_History;
 HEMS_PerformanceComputation.U_k_History=U_k_History; 
 HEMS_PerformanceComputation.E_LoadData=E_LoadData(:,9+1:end,:)/HEMSPlant_Params.Eff_Inv;

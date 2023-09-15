@@ -1,5 +1,5 @@
-function [U_k] = HEMS_Smart_LocalController(X_k_Plant,W_k_Plant,HEMSPlant_Params,Community_Params,Simulation_Params)
-
+function [U_k] = HEMS_Smart_LocalController1(X_k_Plant,W_k_Plant,HEMSPlant_Params,Community_Params,Simulation_Params)
+% edited by shishir
 % Author: Ninad Kiran Gaikwad
 % Date: Mar/10/2021
 % Description: HEMS_Smart_LocalController - Smart Local Controller Logic
@@ -166,8 +166,10 @@ Not_TurningOn_AC_Indices=AC_Indices(~ismember(AC_Indices,TurningOn_AC_Indices));
 %---------------------- Computing Energy Mismatch ------------------------%
 
 % Total energy Desired
-TotalEnergy_Desired=((E_AC/Eff_Inv)*(sum(U_k_DumbLocalController(1,3,:))))+sum(E_Load_Desired_DC)+sum(E_Bat_Charging_Dispatch(1,1,Battery_ActualCharging_Indices));
+%TotalEnergy_Desired=((E_AC/Eff_Inv)*(sum(U_k_DumbLocalController(1,3,:))))+sum(E_Load_Desired_DC)+sum(E_Bat_Charging_Dispatch(1,1,Battery_ActualCharging_Indices));
 
+%edited by shishir
+TotalEnergy_Desired=((E_AC/Eff_Inv)*(sum(U_k_DumbLocalController(1,3,:))))+sum(E_Load_Desired_DC);
 % Energy Mismatch
 AvailableEnergy=Total_PVEnergy_Available+sum(E_Bat_Discharging_Dispatch(1,1,Battery_ActualDischarging_Indices));
 E_Mis=AvailableEnergy-TotalEnergy_Desired;
