@@ -214,7 +214,7 @@ end
 
 %% Community-House Parameter Generation
 
-[HEMSPlant_Params,HEMSHouse_Params] = HEMS_CommunityHouse_Parameter_Generator(Community_Params,Simulation_Params);
+[HEMSPlant_Params,HEMSHouse_Params] = HEMS_CommunityHouse_Parameter_Generator1(Community_Params,Simulation_Params);
 
 %% Initial States,Disturbance and Control Struct Creation
 
@@ -291,7 +291,7 @@ for ii=1:Simulation_Steps_Total % For each Simulation Time Step
     
     if (SmartCommunity_ControllerType==1) % Smart Local Controller
         
-        [U_k] = HEMS_Smart_LocalController(X_k_Plant,W_k_Plant,HEMSPlant_Params,Community_Params,Simulation_Params);
+        [U_k] = HEMS_Smart_LocalController1(X_k_Plant,W_k_Plant,HEMSPlant_Params,Community_Params,Simulation_Params);
         
     elseif (SmartCommunity_ControllerType==2) % Dumb Local Controller
         
@@ -303,7 +303,7 @@ for ii=1:Simulation_Steps_Total % For each Simulation Time Step
     
     % Step 2: Compute Next Plant State
     
-    [X_k_Plus_Plant] = HEMS_Plant(X_k_Plant,W_k_Plant,U_k,HEMSPlant_Params,HEMSHouse_Params,Community_Params,Simulation_Params);
+    [X_k_Plus_Plant] = HEMS_Plant1(X_k_Plant,W_k_Plant,U_k,HEMSPlant_Params,HEMSHouse_Params,Community_Params,Simulation_Params);
     
     % Step 3: Update Plant History
     
