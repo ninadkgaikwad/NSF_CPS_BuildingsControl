@@ -90,7 +90,7 @@ ACLoad_Power=3000; % Tesla Site Value
 AC_VolatageDip=0.3; % 30% Volage Dip at Startup causes 30% Current Dip
 
 %ac start up current
-AC_StartUp_LRA_Factor=8; % LRA - Locked Rotor Current usually 3-8 times rated current
+AC_StartUp_LRA_Factor=3; % LRA - Locked Rotor Current usually 3-8 times rated current
 ACLoad_StartUp_Power=(1-AC_VolatageDip)^(2)*AC_StartUp_LRA_Factor*ACLoad_Power/1000; % In kW
 
 AC_COP=3.33;
